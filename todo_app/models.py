@@ -21,3 +21,6 @@ class TodoItem(models.Model):
 	status = models.CharField(max_length=11, choices=STATUS_CHOICES)
 	created = models.DateTimeField(auto_now_add=True)
 	edited = models.DateTimeField(auto_now=True)
+
+	def __str__(self):
+		return self.task
