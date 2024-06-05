@@ -30,3 +30,8 @@ def update_task(request, task_id):
 	else:
 		form = TaskModelForm(instance=task)
 	return render(request, 'todo_app/update_task.html', {'form': form})
+
+
+def delete_task(request, task_id):
+	TaskModel.objects.filter(id=task_id).delete()
+	return redirect('home')
