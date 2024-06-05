@@ -1,11 +1,11 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import TodoItem
+from .models import TaskModel
 
 
-class TodoItemAdmin(admin.ModelAdmin):
-	list_display = ['task', 'description', 'priority', 'deadline', 'status', 'created', 'edited']
+class TaskModelAdmin(admin.ModelAdmin):
+	list_display = ['task_name', 'description', 'priority', 'deadline', 'status', 'created', 'edited']
 
 
-admin.site.register(TodoItem, TodoItemAdmin)
+admin.site.register(TaskModel, TaskModelAdmin)
