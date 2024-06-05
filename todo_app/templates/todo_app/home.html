@@ -8,8 +8,10 @@
     <ol>
         {% for task in tasks %}
             <li>{{ task.task_name }} | {{ task.description }} | 
-                {{ task.priority }}  | {{ task.status }}      |
-                {{ task.created }}   | {{ task.edited }}</li>
+                {{ task.priority }}  | {{ task.deadline }}    |
+                {{ task.status }}    | {{ task.created }}     | 
+                {{ task.edited }}
+            </li>
         {% endfor %}
     </ol>
 </body>
