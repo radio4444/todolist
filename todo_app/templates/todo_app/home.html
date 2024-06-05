@@ -6,11 +6,14 @@
 </head>
 <body>
     <ol>
-        {% for task in tasks %}
+        {% for task in tasks %} {# show the task with given attribute #}
             <li>{{ task.task_name }} | {{ task.description }} | 
                 {{ task.priority }}  | {{ task.deadline }}    |
                 {{ task.status }}    | {{ task.created }}     | 
                 {{ task.edited }}
+                {# Update hyperlink next to each task #}
+                <a href="{% url 'update' task.id %}">Update</a>
+                
             </li>
         {% endfor %}
     </ol>
