@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+<link rel="stylesheet" href="{% static 'todo_app/style.css' %}">
 <head>
     <meta charset="UTF-8">
     <title>List of tasks</title>
@@ -7,17 +9,41 @@
 <body>
 <h1>List of tasks</h1>
 <a href="{% url 'create' %}">Create Task</a>
-    <ol>
-        {% for task in tasks %} {# show the task with given attribute #}
-            <li>{{ task.task_name }} | {{ task.description }} | 
-                {{ task.priority }}  | {{ task.deadline }}    |
-                {{ task.status }}    | {{ task.created }}     | 
-                {{ task.edited }}
-                {# Update hyperlink next to each task #}
-                <a href="{% url 'update' task.id %}">Update</a>
-                <a href="{% url 'delete' task.id %}">Delete</a>
-            </li>
-        {% endfor %}
-    </ol>
+    <table> 
+        <thead>
+            <tr> 
+                <th>Task Name</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Edited</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.task_name }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.priority }}</td>
+                    <td>{{ task.deadline }}</td>
+                    <td>{{ task.status }}</td>
+                    <td>{{ task.created }}</td>
+                    <td>{{ task.edited }}</td>
+                    <td>
+                        <a href="{% url 'update' task.id %}">Update</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'delete' task.id %}">Delete</a>
+                    </td>
+                        
+                    
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
