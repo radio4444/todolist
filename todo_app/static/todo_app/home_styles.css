@@ -1,5 +1,5 @@
 body{
-    font-family: "Times New Roman", serif;
+    font-family: "Arial", sans-serif;
     margin: 20px;
 }
 
@@ -26,8 +26,8 @@ table, th, td {
 }
 
 th {
-    background-color: #3498db; /* Change this to your desired background color */
-    color: white; /* Optional: Change text color for better contrast */
+    background-color: #3498db;
+    color: white;
 }
 
 th, td {
