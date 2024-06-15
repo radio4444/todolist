@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Create task</title>
-</head>
-<body>
-    <h1>Create task</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type ="submit">Submit</button>
-    </form>
-</body>
-</html>
+{% extends "todo_app/base_task.html" %}
+
+{% block title %}Create task{% endblock %}
+{% block header %}Create task{% endblock %}
+{% block button_text %}Submit{% endblock %}
