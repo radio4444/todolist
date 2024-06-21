@@ -14,15 +14,14 @@ class ReadTaskView(generic.ListView):
 		return TaskModel.objects.all()
 
 
-def create_task(request):  # Create a single task
-	if request.method == 'POST':
-		form = TaskModelForm(request.POST)
-		if form.is_valid():  # Handle validation of user data
-			form.save()
-			return redirect('home')  # redirect to read_task
-	else:
-		form = TaskModelForm()  # render the form
-	return render(request, 'todo_app/create_task.html', {'form': form})
+class CreateTaskView(generic.CreateView):
+	form_class = TaskModelForm
+	template_name = 'todo_app/create_task.html'
+	success_url = reverse_lazy('home')
+
+	def form_valid(self, form):
+		form.save()
+		return super().form_valid(form)
 
 
 def update_task(request, task_id):
