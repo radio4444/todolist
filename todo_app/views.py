@@ -24,16 +24,15 @@ class CreateTaskView(generic.CreateView):
 		return super().form_valid(form)
 
 
-def update_task(request, task_id):
-	task = get_object_or_404(TaskModel, pk=task_id)
-	if request.method == 'POST':
-		form = TaskModelForm(request.POST, instance=task)
-		if form.is_valid():
-			form.save()
-			return redirect('home')
-	else:
-		form = TaskModelForm(instance=task)
-	return render(request, 'todo_app/update_task.html', {'form': form})
+class UpdateTaskView(generic.UpdateView):
+	model = TaskModel
+	form_class = TaskModelForm
+	template_name = 'todo_app/update_task.html'
+	success_url = reverse_lazy('home')
+
+	def form_valid(self, form):
+		form.save()
+		return super().form_valid(form)
 
 
 class DeleteTaskView(generic.DeleteView):
