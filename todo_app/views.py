@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import TaskModel
 from .forms import TaskModelForm
+from django.views import generic
 
 
 # Create your views here.
-def read_task(request):  # shows the list of all tasks
-	tasks = TaskModel.objects.all()
-	return render(request, "todo_app/home.html", {'tasks': tasks})
+class ReadTaskView(generic.ListView):
+	template_name = 'todo_app/home.html'
+	context_object_name = "tasks"
+
+	def get_queryset(self):
+		return TaskModel.objects.all()
 
 
 def create_task(request):  # Create a single task
