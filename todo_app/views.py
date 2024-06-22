@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from .models import TaskModel
-from .forms import TaskModelForm
+from .forms import TaskForm
 from django.views import generic
 from django.urls import reverse_lazy
 
@@ -18,7 +18,7 @@ class ReadTaskView(generic.ListView):
 
 class CreateTaskView(generic.CreateView):
 	# CreateView for creating a single task
-	form_class = TaskModelForm
+	form_class = TaskForm
 	template_name = 'todo_app/create_task.html'
 	success_url = reverse_lazy('home')
 
@@ -31,7 +31,7 @@ class CreateTaskView(generic.CreateView):
 class UpdateTaskView(generic.UpdateView):
 	# UpdateView for updating a single task
 	model = TaskModel
-	form_class = TaskModelForm
+	form_class = TaskForm
 	template_name = 'todo_app/update_task.html'
 	success_url = reverse_lazy('home')
 
