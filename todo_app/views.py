@@ -3,17 +3,16 @@ from .models import TaskModel
 from .forms import TaskForm
 from django.views import generic
 from django.urls import reverse_lazy
+from rest_framework import viewsets
+from .serializers import TaskSerializers
 
 
-# Create your views here.
+# Define your views here.
 class ReadTaskView(generic.ListView):
 	# ListView to display all tasks from TaskModel
+	model = TaskModel
 	template_name = 'todo_app/home.html'
 	context_object_name = "tasks"
-
-	def get_queryset(self):
-		# Retrieve all tasks from TaskModel
-		return TaskModel.objects.all()
 
 
 class CreateTaskView(generic.CreateView):
@@ -55,3 +54,11 @@ class DeleteTaskView(generic.DeleteView):
 		# Use get_object_or_404 to fetch the object based on pk
 		pk = self.kwargs.get('pk')
 		return get_object_or_404(TaskModel, pk=pk)
+
+
+# Define a Django REST Framework ViewSet for managing CRUD operations via API endpoints
+class TaskAPIViewSet(viewsets.ModelViewSet):
+	queryset = TaskModel.objects.all()
+	serializer_class = TaskSerializers
+
+
