@@ -1,0 +1,10 @@
+{% extends "todo_app/base_task.html" %}
+
+{% block title %}Delete task{% endblock %}
+{% block header %}Delete task{% endblock %}
+{% block form_content %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+{% endblock %}
+{% block button_text %}Confirm{% endblock %}
+
+

@@ -1,37 +1,64 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from .models import TaskModel
-from .forms import TaskModelForm
+from .forms import TaskForm
+from django.views import generic
+from django.urls import reverse_lazy
+from rest_framework import viewsets
+from .serializers import TaskSerializers
 
 
-# Create your views here.
-def read_task(request):  # shows the list of all tasks
-	tasks = TaskModel.objects.all()
-	return render(request, "todo_app/home.html", {'tasks': tasks})
+# Define your views here.
+class ReadTaskView(generic.ListView):
+	# ListView to display all tasks from TaskModel
+	model = TaskModel
+	template_name = 'todo_app/home.html'
+	context_object_name = "tasks"
 
 
-def create_task(request):  # Create a single task
-	if request.method == 'POST':
-		form = TaskModelForm(request.POST)
-		if form.is_valid():  # Handle validation of user data
-			form.save()
-			return redirect('home')  # redirect to read_task
-	else:
-		form = TaskModelForm()  # render the form
-	return render(request, 'todo_app/create_task.html', {'form': form})
+class CreateTaskView(generic.CreateView):
+	# CreateView for creating a single task
+	form_class = TaskForm
+	template_name = 'todo_app/create_task.html'
+	success_url = reverse_lazy('home')
+
+	def form_valid(self, form):
+		# Save the form data if it is valid
+		form.save()
+		return super().form_valid(form)
 
 
-def update_task(request, task_id):
-	task = get_object_or_404(TaskModel, pk=task_id)
-	if request.method == 'POST':
-		form = TaskModelForm(request.POST, instance=task)
-		if form.is_valid():
-			form.save()
-			return redirect('home')
-	else:
-		form = TaskModelForm(instance=task)
-	return render(request, 'todo_app/update_task.html', {'form': form})
+class UpdateTaskView(generic.UpdateView):
+	# UpdateView for updating a single task
+	model = TaskModel
+	form_class = TaskForm
+	template_name = 'todo_app/update_task.html'
+	success_url = reverse_lazy('home')
+
+	def get_object(self, queryset=None):
+		# Use get_object_or_404 to fetch the object based on pk
+		pk = self.kwargs.get('pk')
+		return get_object_or_404(TaskModel, pk=pk)
+
+	def form_valid(self, form):
+		# Save the form data if it is valid
+		form.save()
+		return super().form_valid(form)
 
 
-def delete_task(request, task_id):
-	TaskModel.objects.filter(id=task_id).delete()
-	return redirect('home')
+class DeleteTaskView(generic.DeleteView):
+	# DeleteView for deleting a single task
+	model = TaskModel
+	success_url = reverse_lazy('home')
+
+	def get_object(self, queryset=None):
+		# Use get_object_or_404 to fetch the object based on pk
+		pk = self.kwargs.get('pk')
+		return get_object_or_404(TaskModel, pk=pk)
+
+
+# Define a Django REST Framework ViewSet for managing CRUD operations via API endpoints
+class TaskAPIViewSet(viewsets.ModelViewSet):
+	queryset = TaskModel.objects.all()
+	serializer_class = TaskSerializers
+
+

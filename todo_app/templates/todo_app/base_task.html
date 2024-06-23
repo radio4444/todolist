@@ -15,6 +15,7 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    {% block form_content %}{% endblock %}
     <button type="submit">{% block button_text %}{% endblock %}</button>
 </form>
 <!-- Include JQuery -->
