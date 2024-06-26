@@ -10,5 +10,6 @@ urlpatterns = [
 	path('create/', views.CreateTaskView.as_view(), name='create'),
 	path('update/<int:pk>/', views.UpdateTaskView.as_view(), name='update'),
 	path('delete/<int:pk>/', views.DeleteTaskView.as_view(), name='delete'),
-	path('api/', include(router.urls)),
+	path('api/', include(router.urls), name='api'),
+	path('ajax/', views.ajax_index, name='ajax'),
 ]
