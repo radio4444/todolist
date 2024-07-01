@@ -63,6 +63,6 @@ class TaskAPIViewSet(viewsets.ModelViewSet):
 	serializer_class = TaskSerializers
 
 
-# Render ajax-index
-def ajax_index(request):
-	return render(request, 'todo_app/ajax-index.html')
+# Render fetchAPI-index
+def fetch_index(request):
+	return render(request, 'todo_app/fetchAPI-index.html')

@@ -11,5 +11,5 @@ urlpatterns = [
 	path('update/<int:pk>/', views.UpdateTaskView.as_view(), name='update'),
 	path('delete/<int:pk>/', views.DeleteTaskView.as_view(), name='delete'),
 	path('api/', include(router.urls), name='api'),
-	path('ajax/', views.ajax_index, name='ajax'),
+	path('fetchAPI/', views.fetch_index, name='fetch-API'),
 ]
