@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
             console.table(data);
 
+            // Loop through data, which is an array consists of objects.
             data.forEach(item => {
                 const rowData = document.createElement('tr');
 
