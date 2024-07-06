@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             }, networkError => console.log(networkError.message))
             .then(data => {
-                console.table(data);
+                // console.table(data);
 
                 // Loop through data, which is an array consists of objects.
                 data.forEach(item => {
@@ -53,6 +53,25 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     });
 
+                    // Create a cell for the delete button to hold the delete button for each task
+                    const deleteCell = document.createElement('td');
+
+                    // Create the delete button itself
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+
+
+                    deleteButton.addEventListener('click', function () {
+                        //Call the deleteTask function when the delete button is clicked,
+                        // passing the current task's ID and its corresponding row element
+                        if (confirm(`Are you sure you want to delete "${item['Task Name']}"?`)) {
+                            deleteTask(item.id, rowData);
+                        }
+                    });
+
+                    deleteCell.append(deleteButton);
+                    rowData.append(deleteCell);
+
                     table.append(rowData);
                 });
 
@@ -62,6 +81,24 @@ document.addEventListener('DOMContentLoaded', function () {
         container.append(table);
     }
 
+
+    // **Function to delete task**
+    function deleteTask(taskId, rowElement) {
+        fetch(`${endpoint}${taskId}/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    rowElement.remove(); // Remove the row from the table
+                } else {
+                    throw new Error('Failed to delete task');
+                }
+            })
+            .catch(error => console.log(error.message));
+    }
 
 });
 
