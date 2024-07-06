@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const headerRow = document.createElement('tr');
 
     const headers = ['Task Name', 'Description', 'Priority', 'Deadline',
-        'Status', 'Created', 'Edited'];
+        'Status', 'Created', 'Edited', 'Delete'];
 
     // Add the head cell
     headers.forEach(header => {
@@ -19,61 +19,49 @@ document.addEventListener('DOMContentLoaded', function () {
     // Append the headerRow to the table
     table.append(headerRow);
 
-    // Create dummyData for the table
-    const dummyDataArray = ['No task', 'No Description', 'No Priority',
-        'No Deadline', 'No Status', 'No Created', 'No Edited'];
-
-
-    const rowData1 = document.createElement('tr');
-
-    // Add the dummyData in the cell
-    dummyDataArray.forEach(dummyData => {
-        const td = document.createElement('td');
-        td.textContent = dummyData;
-        rowData1.append(td);
-    });
-
-
-    table.append(rowData1);
 
     // Django Rest endpoint
     const endpoint = '/api/tasks/';
 
-    // fetch the data using Django REST API
-    fetch(endpoint)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error('Request Failed');
+    readTask();
 
-        }, networkError => console.log(networkError.message))
-        .then(data => {
-            console.table(data);
+    function readTask() {
+        // fetch the data using Django REST API to view all the tasks
+        fetch(endpoint)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Request Failed');
 
-            // Loop through data, which is an array consists of objects.
-            data.forEach(item => {
-                const rowData = document.createElement('tr');
+            }, networkError => console.log(networkError.message))
+            .then(data => {
+                console.table(data);
 
-                const keys = Object.keys(item);
-                // Loop through each property of the object, except id
+                // Loop through data, which is an array consists of objects.
+                data.forEach(item => {
+                    const rowData = document.createElement('tr');
 
-                keys.forEach(key => {
-                    if (key !== 'id') {
-                        const td = document.createElement('td');
-                        td.textContent = item[key]
-                        rowData.append(td);
-                    }
+                    const keys = Object.keys(item);
+                    // Loop through each property of the object, except id
+
+                    keys.forEach(key => {
+                        if (key !== 'id') {
+                            const td = document.createElement('td');
+                            td.textContent = item[key];
+                            rowData.append(td);
+                        }
+                    });
+
+                    table.append(rowData);
                 });
 
-                table.append(rowData);
+
             });
+        // Append the table to container
+        container.append(table);
+    }
 
 
-        });
-
-
-    // Append the table to container
-    container.append(table);
 });
 
