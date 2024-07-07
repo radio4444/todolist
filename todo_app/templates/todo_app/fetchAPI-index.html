@@ -9,8 +9,29 @@
 </head>
 <body>
 <h1>Fetch API CRUD operation</h1>
-<div id="todolist-container">
-    
+<div id="todolist-container"></div>
+<button id="create-task-button">Create Task</button>
+
+<div id="create-task-form-container" style="display: none;">
+    <form id="create-task-form">
+        <input type="text" id="task-name" name="task_name" placeholder="Task Name" required>
+        <input type="text" id="description" name="description" placeholder="Description" required>
+        <select id="priority" name="priority" required>
+            <option value="">Select Priority</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+        <input type="datetime-local" id="deadline" name="deadline" placeholder="deadline" required>
+        <select id="status" name="status" required>
+            <option value="">Select Status</option>
+            <option value="Not started">Not started</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Complete">Complete</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
 </div>
+
 </body>
 </html>
