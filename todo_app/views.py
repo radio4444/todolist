@@ -1,9 +1,10 @@
-from django.shortcuts import get_object_or_404
-from .models import TaskModel
-from .forms import TaskForm
+from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.urls import reverse_lazy
 from rest_framework import viewsets
+
+from .models import TaskModel
+from .forms import TaskForm
 from .serializers import TaskSerializers
 
 
@@ -62,3 +63,6 @@ class TaskAPIViewSet(viewsets.ModelViewSet):
 	serializer_class = TaskSerializers
 
 
+# Render fetchAPI-index
+def fetch_index(request):
+	return render(request, 'todo_app/fetchAPI-index.html')
